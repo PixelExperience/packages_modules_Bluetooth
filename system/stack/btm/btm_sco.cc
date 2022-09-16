@@ -33,6 +33,7 @@
 #include "osi/include/allocator.h"
 #include "osi/include/log.h"
 #include "osi/include/osi.h"
+#include "osi/include/properties.h"
 #include "stack/btm/btm_sec.h"
 #include "stack/btm/security_device_record.h"
 #include "stack/include/acl_api.h"
@@ -79,6 +80,8 @@ const bluetooth::legacy::hci::Interface& GetLegacyHciInterface() {
 #define BTM_SCO_EXCEPTION_PKTS_MASK                              \
   (ESCO_PKT_TYPES_MASK_NO_2_EV3 | ESCO_PKT_TYPES_MASK_NO_3_EV3 | \
    ESCO_PKT_TYPES_MASK_NO_2_EV5 | ESCO_PKT_TYPES_MASK_NO_3_EV5)
+
+static char value[PROPERTY_VALUE_MAX];
 
 /******************************************************************************/
 /*            L O C A L    F U N C T I O N     P R O T O T Y P E S            */
@@ -140,7 +143,9 @@ static void btm_esco_conn_rsp(uint16_t sco_inx, uint8_t hci_status,
     }
     /* Use Enhanced Synchronous commands if supported */
     if (controller_get_interface()
-            ->supports_enhanced_setup_synchronous_connection()) {
+            ->supports_enhanced_setup_synchronous_connection() &&
+        (osi_property_get("qcom.bluetooth.soc", value, "qcombtsoc") &&
+         strcmp(value, "cherokee") == 0)) {
       /* Use the saved SCO routing */
       p_setup->input_data_path = p_setup->output_data_path = ESCO_DATA_PATH;
 
@@ -341,7 +346,9 @@ static tBTM_STATUS btm_send_connect_request(uint16_t acl_handle,
 
     /* Use Enhanced Synchronous commands if supported */
     if (controller_get_interface()
-            ->supports_enhanced_setup_synchronous_connection()) {
+            ->supports_enhanced_setup_synchronous_connection() &&
+        (osi_property_get("qcom.bluetooth.soc", value, "qcombtsoc") &&
+         strcmp(value, "cherokee") == 0)) {
       LOG_INFO("Sending enhanced SCO connect request over handle:0x%04x",
                acl_handle);
       /* Use the saved SCO routing */
@@ -1174,7 +1181,9 @@ static tBTM_STATUS BTM_ChangeEScoLinkParms(uint16_t sco_inx,
 
     /* Use Enhanced Synchronous commands if supported */
     if (controller_get_interface()
-            ->supports_enhanced_setup_synchronous_connection()) {
+            ->supports_enhanced_setup_synchronous_connection() &&
+         (osi_property_get("qcom.bluetooth.soc", value, "qcombtsoc") &&
+          strcmp(value, "cherokee") == 0)) {
       /* Use the saved SCO routing */
       p_setup->input_data_path = p_setup->output_data_path = ESCO_DATA_PATH;
 
