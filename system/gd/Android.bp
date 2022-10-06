@@ -137,6 +137,8 @@ cc_defaults {
         "gd_defaults",
         "gd_clang_file_coverage",
         "libchrome_support_defaults",
+        "disable_bluetooth_le_read_buffer_size_v2_defaults",
+        "disable_bluetooth_le_set_host_feature_defaults",
     ],
     host_supported: true,
     target: {
