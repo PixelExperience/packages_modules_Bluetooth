@@ -18,6 +18,7 @@ android_app {
     ],
 
     resource_dirs: [
+        "res",
         "res-airpods",
         "res-beats",
     ],
