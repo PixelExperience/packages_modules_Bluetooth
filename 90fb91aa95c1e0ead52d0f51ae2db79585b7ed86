@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cdcdfd9_76de6766",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000644
+      },
+      "writtenOn": "2023-01-04T00:43:49Z",
+      "side": 1,
+      "message": "This is old commits\nPlease check\nhttps://github.com/TheParasiteProject/packages_modules_Bluetooth\nfor updated commits\n\nRequired commits are\nhttps://github.com/TheParasiteProject/packages_modules_Bluetooth\ngit cherry-pick 44a0bbde9ade655099109ff9809ae16891465dbb^..13dcbcef5329578de7bee20645b2c3ae551d1935\ngit cherry-pick a314c99ffa4f7dcc0367f5c99ec1ae9afdb867e4^..f3e82fd38f6711c2eed7966340d7919b468ac507",
+      "revId": "90fb91aa95c1e0ead52d0f51ae2db79585b7ed86",
+      "serverId": "8ba0da3e-d57f-4bbe-ac74-faf358ba962a"
+    }
+  ]
+}
