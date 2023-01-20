@@ -347,6 +347,10 @@ struct HciLayer::impl {
           auto view = CommandStatusView::Create(event);
           ASSERT(view.IsValid());
           auto op_code = view.GetCommandOpCode();
+          if (op_code == OpCode::READ_REMOTE_VERSION_INFORMATION) {
+            LOG_WARN("OpCode 0x%02hx (%s) is not in the command queue, skipped.", op_code, OpCodeText(op_code).c_str());
+            return;
+          }
           ASSERT_LOG(op_code == OpCode::NONE,
             "Received %s event with OpCode 0x%02hx (%s) without a waiting command"
             "(is the HAL sending commands, but not handling the events?)",
