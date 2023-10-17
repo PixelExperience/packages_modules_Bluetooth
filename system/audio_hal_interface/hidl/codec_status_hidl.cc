@@ -494,6 +494,16 @@ bool UpdateOffloadingCapabilities(
       case BTAV_A2DP_CODEC_INDEX_SOURCE_LDAC:
         codec_type_masks |= CodecType::LDAC;
         break;
+      case BTAV_A2DP_CODEC_INDEX_SOURCE_LC3:
+        LOG(WARNING) << __func__
+                     << ": Ignore source codec_type=" << preference.codec_type
+                     << ", not supported on HIDL";
+        break;
+      case BTAV_A2DP_CODEC_INDEX_SOURCE_OPUS:
+        LOG(WARNING) << __func__
+                     << ": Ignore source codec_type=" << preference.codec_type
+                     << ", not supported on HIDL";
+        break;
       case BTAV_A2DP_CODEC_INDEX_SINK_SBC:
         [[fallthrough]];
       case BTAV_A2DP_CODEC_INDEX_SINK_AAC:
@@ -510,7 +520,6 @@ bool UpdateOffloadingCapabilities(
         return false;
     }
   }
-  offloading_preference.clear();
   for (auto capability : audio_hal_capabilities) {
     if (static_cast<CodecType>(capability.codecCapabilities().codecType &
                                codec_type_masks) != CodecType::UNKNOWN) {
@@ -529,6 +538,9 @@ bool UpdateOffloadingCapabilities(
 // Check whether this codec is supported by the audio HAL and is allowed to use
 // by prefernece of framework / Bluetooth SoC / runtime property.
 bool IsCodecOffloadingEnabled(const CodecConfiguration& codec_config) {
+  LOG(INFO) << __func__
+            << ": offloading_preference size=" << offloading_preference.size();
+
   for (auto preference : offloading_preference) {
     if (codec_config.codecType != preference.codecCapabilities().codecType)
       continue;
